@@ -27,37 +27,47 @@ img {
 }
 
 .wrapper--very-thin {
-    max-width: 500px;
+    max-width: 800px;
 }
 
 .blog {
     height: auto;
     border: 3px solid black;
+    padding: 0 1rem 1rem 1rem;
     background: rgb(245, 245, 245);
 }
 
 .blog__post {
-    padding: 2rem 0;
+    padding: 0;
 }
 
 .blog__post__date {
+    padding: 1.4rem 0;
     font-family: 'Poppins';
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     text-transform: uppercase;
-    letter-spacing: 0.6rem;
-    color: deepskyblue;
+    letter-spacing: 0.4rem;
+    color: rgb(0, 181, 245);
 }
 
 .blog__post__title {
-
+    padding: 0 0 1.4rem 0;
 }
 
-.blog__post_desc {
-
+.blog__post__title h1 {
+    display: inline;
+    font-family: 'Poppins';
+    font-size: 1.95rem;
+    color: black;
 }
 
-.blog__post_content {
+.blog__post__desc {
+    padding: 0 0 0 0.4rem;
+    border-left: 5px solid gray;
+}
 
+.blog__post__content {
+    padding: 0.8rem 0 0 0;
 }
 
 .row {
