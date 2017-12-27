@@ -1,0 +1,23 @@
+{
+  "name": "SimpleBlogCMS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JureVidrih/SimpleBlogCMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JureVidrih/SimpleBlogCMS/issues"
+  },
+  "homepage": "https://github.com/JureVidrih/SimpleBlogCMS#readme",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
