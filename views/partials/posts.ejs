@@ -1,0 +1,12 @@
+<div class="site-posts">
+    <%for(var i = 0; i < posts.length; i++) {%>
+        <article>
+            <div class="content">
+                <a class="site-posts__post-title" href="#"><%=posts[i].title%></a>
+                <a class="site-posts__post-preview" href="#"><%=posts[i].content%></a>
+            </div>
+            <p class="site-posts__post-info">Posted by <a class="author" href="#"><%=posts[i].author%></a> on <%=posts[i].originalDate%></p>
+        </article>
+    <%}%>
+    <button class="btn btn-large btn-info float-right">Older Posts &nbsp;<i class="fa fa-long-arrow-right"></i></button>
+</div>

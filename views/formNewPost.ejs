@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <% include partials/head %>
+        <title>SimpleBlogCMS - Create a New Post</title>
+    </head>
+    <body>
+        <% include partials/navbar %>
+        <% include partials/dash %>
+        <div class="container">
+            <form method="POST" action="/posts">
+                <div class="form-group">
+                    <label>Post title: <input type="text" name="postTitle" placeholder="Type post title here.." required></label><br>
+                    <label>Post author: <input type="text" name="postAuthor" placeholder="Type post author here.." required></label><br>
+                    Post content: <br><textarea rows="12" cols="64" name="postContent" placeholder="This is where the post content goes.." minlength="25" maxlength="9000"></textarea><br>
+                    <button class="btn btn-lg btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <% include partials/footer %>
+    </body>
+</html>

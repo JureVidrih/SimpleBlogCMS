@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu';
+}
+
+.site-dash {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 600px;
+    color: white;
+    background-image: url("../photos/dash-bg/dash-landing.jpg");
+    background-size: cover;
+    background-position-y: 85%;
+}
+
+.site-dash__content {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-shadow: 1px 1px 2px black;
+}
+
+.site-dash__content h1 {
+    font-size: 2.75rem;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.site-dash__content p {
+    font-size: 1.35rem;
+    font-weight: 100;
+}
+
+.site-posts {
+    display: block;
+    width: 80%;
+    height: auto;
+    padding: 75px 0 25px 0;
+    margin: 0 auto;
+}
+
+@media (min-width: 720px) {
+    .site-posts {
+        width: 66%;
+    }
+}
+
+@media (min-width: 900px) {
+    .site-posts {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1080px) {
+    .site-posts {
+        width: 45%;
+    }
+}
+
+.site-posts article {
+    width: 100%;
+    height: auto;
+    padding: 0 0 40px 0;
+    color: black;
+    text-align: left;
+}
+
+.content {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.content a {
+    display: inline-block;
+    color: black;
+    transition: color .15s ease-out;
+}
+
+.content a:hover {
+    text-decoration: none;
+}
+
+.site-posts__post-title {
+    font-size: 2.35rem;
+    font-weight: bold;
+}
+
+.site-posts__post-preview {
+    width: 100%;
+    font-size: 1.7rem;
+    font-weight: 100;
+    color: rgb(85, 85, 85);
+}
+
+.site-posts__post-info {
+    font-size: 1.25rem;
+    font-weight: 100;
+    font-style: italic;
+    color: rgb(95, 95, 95);
+}
+
+.author {
+    color: black;
+    font-style: normal;
+    transition: color .15s ease-out;
+}
+
+.author:hover {
+    color: #005ca7;
+}
+
+.btn-large {
+    width: 148px;
+    height: 48px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.site-footer {
+    display: block;
+    width: 100%;
+    height: 200px;
+    padding: 85px 0 5px 0;
+    text-align: center;
+}
+
+.site-footer i {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin: 0 10px 20px 0;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+    padding-top: 8px;
+    transition: background-color .15s ease-out;
+}
+
+.site-footer i:hover {
+    background-color: rgb(0, 92, 167);
+}
+
+.site-footer p {
+    color: rgb(100, 100, 100);
+}

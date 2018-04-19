@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <% include partials/head %>
+        <style>
+            input {
+                width: 100%;
+            }
+        </style>
+        <title>SimpleBlogCMS - Login</title>
+    </head>
+    <body>
+        <% include partials/navbar %>
+        <div class="container col-2">
+            <form method="GET" action="">
+                <div class="form-group">
+                    <label>Username: <input type="text" name="username" placeholder="Your username.." pattern=".{5,15}" required></label><br>
+                    <label>Password: <input type="password" name="password" placeholder="Your password.." pattern=".{5,15}" required></label><br>
+                    <button class="btn btn-lg btn-primary btn-block">Login</button>
+                </div>
+            </form>
+        </div>
+        <% include partials/footer %>
+    </body>
+</html>
