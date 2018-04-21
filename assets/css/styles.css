@@ -5,6 +5,10 @@
     font-family: 'Ubuntu';
 }
 
+.a-large {
+    font-size: 1.35rem;
+}
+
 .txt-align-center {
     text-align: center;
 }
@@ -89,8 +93,9 @@
     transition: color .15s ease-out;
 }
 
-.content a:hover {
+.content:hover a {
     text-decoration: none;
+    color: #005ca7;
 }
 
 .site-posts__post-title {
