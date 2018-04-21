@@ -11,12 +11,12 @@
     </head>
     <body>
         <% include partials/navbar %>
-        <div class="container col-2">
-            <form method="GET" action="">
+        <div class="container col-2 mt-5">
+            <form method="POST" action="/login">
                 <div class="form-group">
                     <label>Username: <input type="text" name="username" placeholder="Your username.." pattern=".{5,15}" required></label><br>
                     <label>Password: <input type="password" name="password" placeholder="Your password.." pattern=".{5,15}" required></label><br>
-                    <button class="btn btn-lg btn-primary btn-block">Login</button>
+                    <button class="btn btn-lg btn-primary btn-block mt-2">Login</button>
                 </div>
             </form>
         </div>

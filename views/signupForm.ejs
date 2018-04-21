@@ -11,13 +11,13 @@
     </head>
     <body>
         <% include partials/navbar %>
-        <div class="container col-2">
-            <form method="GET" action="">
+        <div class="container col-2 mt-5">
+            <form method="POST" action="/signup">
                 <div class="form-group">
                     <label>Username: <input type="text" name="username" placeholder="Your username.." pattern=".{5,15}" required></label><br>
                     <label>Password: <input type="password" name="password" placeholder="Your password.." pattern=".{5,15}" required></label><br>
                     <label>About you: <br><textarea name="aboutuser" placeholder="Tell us a little bit about yourself.."></textarea></label>
-                    <button class="btn btn-lg btn-primary btn-block">Sign up</button>
+                    <button class="btn btn-lg btn-primary btn-block mt-2">Sign up</button>
                 </div>
             </form>
         </div>

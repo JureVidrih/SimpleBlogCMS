@@ -5,6 +5,10 @@
     font-family: 'Ubuntu';
 }
 
+.txt-align-center {
+    text-align: center;
+}
+
 .site-dash {
     display: block;
     position: relative;
@@ -92,6 +96,7 @@
 .site-posts__post-title {
     font-size: 2.35rem;
     font-weight: bold;
+    line-height: 2.35rem;
 }
 
 .site-posts__post-preview {

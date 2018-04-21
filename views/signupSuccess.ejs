@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <% include partials/head %>
+        <style>
+            input {
+                width: 100%;
+            }
+        </style>
+        <title>SimpleBlogCMS - Create a new account</title>
+    </head>
+    <body>
+        <% include partials/navbar %>
+        <div class="container col-4 mt-5">
+            <div class="jumbotron">
+                <h1><%=newUserData.username%>, you have successfully registered into our database of users! You are user No.<%=id%></h1>
+            </div>
+        </div>
+        <% include partials/footer %>
+    </body>
+</html>
