@@ -25,7 +25,7 @@ app.get("/gallery", function(req, res) {
 
 app.get("/posts", function(req, res) {
     var posts = dbutils.postsArray;
-    res.render("partials/posts", {posts: posts});
+    res.render("partials/posts", {origin: "posts", posts: posts});
 });
 
 app.get("/posts/new", function(req, res) {
@@ -40,7 +40,7 @@ app.get("/posts/show/:id", function(req, res) {
     }
 
     this.successAction = function(post) {
-        res.render("postShow.ejs", {post: post});
+        res.render("postShow.ejs", {origin: "showPost", post: post});
     }
 
     var post = dbutils.findAPostById(postId, this.errAction, this.successAction);
@@ -66,7 +66,7 @@ app.post("/posts", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-    res.render("login");
+    res.render("login", {origin: "login"});
 });
 
 app.post("/login", function(req, res) {
@@ -85,7 +85,7 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/signup/new", function(req, res) {
-    res.render("signupForm");
+    res.render("signupForm", {origin: "newSignUp"});
 });
 
 app.post("/signup", function(req, res) {

@@ -6,21 +6,21 @@
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item <%=(origin == 'index') ? "active" : ""%>">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/gallery">Gallery</a>
+      <li class="nav-item <%=(origin == 'gallery') ? "active" : ""%>">
       </li>
-      <li class="nav-item">
+        <a class="nav-link" href="/gallery">Gallery</a>
+      <li class="nav-item <%=(origin == 'posts') ? "active" : ""%>">
         <a class="nav-link" href="/posts">Posts</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
+      <li class="nav-item <%=(origin == 'login') ? "active" : ""%>">
         <a class="nav-link" href="/login">Login</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item <%=(origin == 'newSignUp') ? "active" : ""%>">
         <a class="nav-link" href="/signup/new">Sign up</a>
       </li>
     </ul>
