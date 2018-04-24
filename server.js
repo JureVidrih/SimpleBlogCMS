@@ -5,8 +5,6 @@ var bpars = require('body-parser');
 
 var dbutils = require('./assets/js/dbutils');
 dbutils.connectToMongoServer();
-dbutils.updateUsers();
-dbutils.updatePosts();
 
 app.use(express.static("public"));
 app.use(express.static("assets"));

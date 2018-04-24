@@ -5,6 +5,9 @@ var dbutils = {
         mongoose.connect("mongodb://localhost/simpleblogcms");
         
         this.createAModelFromSchema();
+        
+        dbutils.updateUsers();
+        dbutils.updatePosts();
     },
     createAModelFromSchema: function createAModelFromSchema() {
         this.userSchema = new mongoose.Schema({
