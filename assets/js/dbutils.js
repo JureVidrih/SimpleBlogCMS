@@ -17,7 +17,7 @@ var dbutils = {
         });
         this.userDBModel = mongoose.model("User", this.userSchema);
 
-        this.postSchema = mongoose.Schema({
+        this.postSchema = new mongoose.Schema({
             postTitle: String,
             postAuthor: String,
             postContent: String,
