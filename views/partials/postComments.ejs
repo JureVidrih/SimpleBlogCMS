@@ -1,0 +1,6 @@
+<h3 class="mb-3">Comments:</h3>
+<% post.comments.forEach(function(comment) { %>
+            <h5><%=comment.author%></h5>
+            <p><%=comment.content%></p>
+            <hr>
+<% }); %>

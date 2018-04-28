@@ -2,11 +2,14 @@
     <%for(var i = 0; i < posts.length; i++) {%>
         <article>
             <div class="content">
-                <a class="site-posts__post-title mb-4" href="/posts/show/<%=posts[i].id%>"><%=posts[i].postTitle%></a>
-                <a class="site-posts__post-preview mb-1" href="/posts/show/<%=posts[i].id%>"><%=posts[i].postContent%></a>
+                <a class="site-posts__post-title mb-4" href="/posts/<%=posts[i].id%>"><%=posts[i].postTitle%></a>
+                <a class="site-posts__post-preview mb-1" href="/posts/<%=posts[i].id%>"><%=posts[i].postContent%></a>
             </div>
-            <p class="site-posts__post-info">Posted by <a class="author" href="#"><%=posts[i].postAuthor%></a> on <%=posts[i].originalDate%></p>
+            <p class="site-posts__post-info">Posted by <a class="author" href="#"><%=posts[i].postAuthor%></a> on <%=posts[i].originalDate%>. <a class="author" href="/posts/<%=posts[i]._id%>">(<%=posts[i].comments.length%>) comments</a>.</p>
         </article>
     <%}%>
+    <% if(posts.length == 0) { %>
+        <p class="site-posts__post-title mb-4">There are no posts yet.</p>
+    <% } %>
     <a class="a-large" href="/posts/new">Write a New Post</a><button class="btn btn-large btn-info float-right">Older Posts &nbsp;<i class="fa fa-long-arrow-right"></i></button>
 </div>

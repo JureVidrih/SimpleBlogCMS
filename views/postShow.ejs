@@ -11,6 +11,18 @@
             <h1><%=post.postTitle%></h1>
             <p><%=post.postContent%></p>
         </div>
+        <hr>
+        <div class="container mt-5">
+        <% if(post.comments.length == 0) { %>
+            <h6>There arent't any comments on this post.</h6>
+        <% } %>
+        <form class="form-group mt-4 mb-5" action="/posts/<%=post.id%>?_method=PUT" method="POST">
+            <input class="form-control" type="text" name="commentAuthor" pattern=".{5, 15}" placeholder="Your name here..">
+            <textarea class="form-control mt-1" name="commentContent" placeholder="Type your comment here.." pattern=".{5,250}"></textarea>
+            <button class="mt-3 btn btn-primary">Submit comment</button>
+        </form>
+        <% include partials/postComments %>
+        </div>
         <% include partials/footer %>
     </body>
 </html>
