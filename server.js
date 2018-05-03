@@ -7,6 +7,10 @@ var bpars = require('body-parser');
 var dbutils = require('./assets/js/dbutils');
 dbutils.connectToMongoServer();
 
+var dbusers = require('./models/dbusers');
+var dbposts = require('./models/dbposts');
+var dbcomments = require('./models/dbcomments');
+
 app.use(express.static("public"));
 app.use(express.static("assets"));
 app.use(express.static("build"));
@@ -15,7 +19,7 @@ app.use(bpars.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
-    var posts = dbutils.postsArray;
+    var posts = dbposts.postsArray;
     console.log(posts[0].comments);
     res.render("index", {origin: "index", posts: posts});
 });
@@ -25,7 +29,7 @@ app.get("/gallery", function(req, res) {
 });
 
 app.get("/posts", function(req, res) {
-    var posts = dbutils.postsArray;
+    var posts = dbposts.postsArray;
     // dbutils.addAComment({postId: dbutils.postsArray[0].id, author: "Unknown author", content: "This is just a first comment that I've written."}, function() {
     //     res.send("There was an error while publishing your comment. Try again later.");
     // }, function() {
@@ -50,7 +54,7 @@ app.get("/posts/:id", function(req, res) {
         res.render("postShow.ejs", {origin: "showPost", post: post});
     }
 
-    var post = dbutils.findAPostById(postId, this.errAction, this.successAction);
+    var post = dbposts.findAPostById(postId, this.errAction, this.successAction);
 
     // postId = Number(postId);
 
@@ -72,7 +76,7 @@ app.post("/posts", function(req, res) {
     var postAuthor = req.body.postAuthor;
     var postContent = req.body.postContent;
     var postDate = new Date();
-    dbutils.addAPost({postTitle: postTitle, postContent: postContent, postAuthor: postAuthor, originalDate: postDate}, function() {
+    dbposts.addAPost({postTitle: postTitle, postContent: postContent, postAuthor: postAuthor, originalDate: postDate}, function() {
         res.send("There was an error creating your post. Try again later.");
     }, function() {
         res.redirect("/");
@@ -99,7 +103,7 @@ app.post("/login", function(req, res) {
     username = req.body.username;
     password = req.body.password;
 
-    authSuccess = dbutils.authenticate({username: username, password: password});
+    authSuccess = dbusers.authenticate({username: username, password: password});
 
     if(authSuccess) {
         console.log("User " + username + " has successfully logged in.");
@@ -116,9 +120,9 @@ app.get("/signup/new", function(req, res) {
 
 app.post("/signup", function(req, res) {
     newUser = {username: req.body.username, password: req.body.password, about: req.body.aboutuser};
-    authSuccess = dbutils.checkUserName(newUser.username);
+    authSuccess = dbusers.checkUserName(newUser.username);
     if(authSuccess) {
-        dbutils.addAUser(newUser, function() {
+        dbusers.addAUser(newUser, function() {
             res.send("There was an error creating a new user. Try again later.");
         }, function() {
             res.render("signupSuccess", {newUserData: newUser, id: dbutils.usersArray.length});
