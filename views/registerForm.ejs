@@ -12,10 +12,11 @@
     <body>
         <% include partials/navbar %>
         <div class="container col-2 mt-5">
-            <form method="POST" action="/signup">
+            <form method="POST" action="/users" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Username: </label><input class="form-control" type="text" name="username" placeholder="Your username.." pattern=".{5,15}" required><br>
                     <label>Password: </label><input class="form-control" type="password" name="password" placeholder="Your password.." pattern=".{5,15}" required><br>
+                    <label>Profile picture: </label><input class="form-control" type="file" name="profilePicture">
                     <label>About you: <br></label><textarea class="form-control" name="aboutuser" placeholder="Tell us a little bit about yourself.."></textarea>
                     <button class="btn btn-lg btn-primary btn-block mt-2">Sign up</button>
                 </div>

@@ -1,5 +1,27 @@
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({dest: "./temp/profilepics"});
+
+function saveFile(path, name) {
+    console.log("Saving a file " + path + " to " + name);
+    fs.rename(path, name, function(err) {
+        console.log(err);
+        
+        return false;
+    });
+
+    console.log("File successfully saved!");
+    return true;
+}
+
 var express = require('express'), 
 app = express();
+
+var session = require('express-session');
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var methodOverride = require('method-override');
 var bpars = require('body-parser');
@@ -7,9 +29,39 @@ var bpars = require('body-parser');
 var dbutils = require('./assets/js/dbutils');
 dbutils.connectToMongoServer();
 
-var dbusers = require('./models/dbusers');
-var dbposts = require('./models/dbposts');
-var dbcomments = require('./models/dbcomments');
+var dbUsers = require('./models/dbusers');
+var dbPosts = require('./models/dbposts');
+var dbComments = require('./models/dbcomments');
+
+app.use(session({
+    secret: "This is a handy secret that I just wrote.",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(dbUsers.User.authenticate()));
+passport.serializeUser(dbUsers.User.serializeUser());
+passport.deserializeUser(dbUsers.User.deserializeUser());
+
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
+app.use(function(req, res, next) {
+    if(req.user) {
+        res.locals.username = req.user.username;
+    } else {
+        res.locals.username = "";
+    }
+
+    next();
+});
 
 app.use(express.static("public"));
 app.use(express.static("assets"));
@@ -19,9 +71,12 @@ app.use(bpars.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
-    var posts = dbposts.postsArray;
-    console.log(posts[0].comments);
-    res.render("index", {origin: "index", posts: posts});
+    dbPosts.Post.find({}, function(err, foundPosts) {
+        if(!foundPosts) {
+            foundPosts = [];
+        }
+        res.render("index", {origin: "index", posts: foundPosts});
+    });
 });
 
 app.get("/gallery", function(req, res) {
@@ -29,69 +84,73 @@ app.get("/gallery", function(req, res) {
 });
 
 app.get("/posts", function(req, res) {
-    var posts = dbposts.postsArray;
-    // dbutils.addAComment({postId: dbutils.postsArray[0].id, author: "Unknown author", content: "This is just a first comment that I've written."}, function() {
-    //     res.send("There was an error while publishing your comment. Try again later.");
-    // }, function() {
-    //     // res.redirect("/");
-    // });
-
-    res.render("partials/posts", {origin: "posts", posts: posts});
+    dbPosts.Post.find({}, function(err, foundPosts) {
+        if(err) {
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.render("partials/posts", {origin: "posts", posts: foundPosts});
+        }
+    });
 });
 
-app.get("/posts/new", function(req, res) {
+app.get("/posts/new", isLoggedIn, function(req, res) {
     res.render("postNew", {origin: "newPost"});
 });
 
 app.get("/posts/:id", function(req, res) {
-    var postId = req.params.id;
-
-    this.errAction = function() {
-        res.send("Post with an id of " + postId + " wasn't found.");
-    }
-
-    this.successAction = function(post) {
-        res.render("postShow.ejs", {origin: "showPost", post: post});
-    }
-
-    var post = dbposts.findAPostById(postId, this.errAction, this.successAction);
-
-    // postId = Number(postId);
-
-    // if(isNaN(postId) || postId >= posts.length) {
-    //     console.log("An invalid post show route with an Id of " + req.params.id + " has been accessed.");
-    //     res.send("Invalid post ID! It most likely isn't a number!");
-    // } else {
-    //     console.log("Showing post #" + postId);
-    //     res.render("postShow.ejs", {post: posts[postId]});
-    // }
-});
-
-app.get("/posts/:id/edit", function(req, res) {
-
-});
-
-app.post("/posts", function(req, res) {
-    var postTitle = req.body.postTitle;
-    var postAuthor = req.body.postAuthor;
-    var postContent = req.body.postContent;
-    var postDate = new Date();
-    dbposts.addAPost({postTitle: postTitle, postContent: postContent, postAuthor: postAuthor, originalDate: postDate}, function() {
-        res.send("There was an error creating your post. Try again later.");
-    }, function() {
-        res.redirect("/");
+    dbPosts.Post.findOne({_id: req.params.id}, function(err, foundPost) {
+        if(err) {
+            res.send("Post with an id of " + req.params.id + " wasn't found.");
+        } else {
+            res.render("postShow", {origin: "posts", post: foundPost});
+        }
     });
 });
 
-app.put("/posts/:id", function(req, res) {
-    if(req.body.commentAuthor && req.body.commentContent) {
-        var newComment = {author: req.body.commentAuthor, content: req.body.commentContent};
-        dbutils.attachAComment(req.params.id, newComment);
+app.get("/posts/:id/edit", isLoggedIn, function(req, res) {
+
+});
+
+app.post("/posts", isLoggedIn, function(req, res) {
+    var newPost = {
+        postTitle: req.body.postTitle,
+        postAuthor: req.user.username,
+        postContent: req.body.postContent,
+        postDate: new Date()
+    };
+    dbPosts.Post.create(newPost, function(err, result) {
+        if(err) {
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.redirect("/");
+        }
+    });
+});
+
+app.post("/posts/:id/comments", isLoggedIn, function(req, res) {
+    if(req.user.username && req.body.commentContent) {
+        var newComment = {author: req.user, content: req.body.commentContent};
+        dbPosts.Post.findOne({_id: req.params.id}, function(err, foundPost) {
+            if(err) {
+                console.log(err);
+                res.redirect("back");
+            } else {
+                foundPost.comments.push(newComment);
+                foundPost.save(function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("Successfully added a new comment into the post object.");                    }
+                });
+            }
+        });
     }
     res.redirect("/posts/" + req.params.id);
 });
 
-app.delete("/posts/:id", function(req, res) {
+app.delete("/posts/:id", isLoggedIn, function(req, res) {
     res.send("delete request");
 });
 
@@ -99,38 +158,53 @@ app.get("/login", function(req, res) {
     res.render("login", {origin: "login"});
 });
 
-app.post("/login", function(req, res) {
-    username = req.body.username;
-    password = req.body.password;
-
-    authSuccess = dbusers.authenticate({username: username, password: password});
-
-    if(authSuccess) {
-        console.log("User " + username + " has successfully logged in.");
-    } else {
-        console.log("An unsuccessful attempt at login has occured (username: " + username + ", password: " + password + ").");
-    }
-
+app.get("/logout", isLoggedIn, function(req, res) {
+    req.logout();
     res.redirect("/");
 });
 
-app.get("/signup/new", function(req, res) {
-    res.render("signupForm", {origin: "newSignUp"});
+app.post("/login", passport.authenticate("local", {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}));
+
+app.get("/users/new", function(req, res) {
+    res.render("registerForm", {origin: "register"});
 });
 
-app.post("/signup", function(req, res) {
-    newUser = {username: req.body.username, password: req.body.password, about: req.body.aboutuser};
-    authSuccess = dbusers.checkUserName(newUser.username);
-    if(authSuccess) {
-        dbusers.addAUser(newUser, function() {
-            res.send("There was an error creating a new user. Try again later.");
-        }, function() {
-            res.render("signupSuccess", {newUserData: newUser, id: dbutils.usersArray.length});
-        });
-    } else {
-        console.log("An unsuccessful attempt to register an account has occured.");
-        res.send("Invalid username. Try another one.")
-    }
+app.post("/users", upload.single("profilePicture"), function(req, res) {
+    newUser = {username: req.body.username, about: req.body.aboutuser};
+    dbUsers.User.register(new dbUsers.User(newUser), req.body.password, function(err, user) {
+        if(err) {
+            console.log("There was an error registering the new user to the database. - " + err);
+            res.redirect("/");
+        } else {
+            var profileNum = 0;
+            fs.readdir("./public/pictures/profilepics/", function(err, files) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    profileNum = files.length;
+                    if(saveFile(req.file.path, "./public/pictures/profilepics/" + profileNum + ".png")) {
+                        user.profilePicture = "/pictures/profilepics/" + profileNum + ".png";
+                        user.save(function(err) {
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                console.log("Successfully saved the new profile picture.");
+                            }
+                        });
+                        passport.authenticate("local")(req, res, function() {
+                            console.log("New user successfully registered! Data: " + user);
+                            res.redirect("/");
+                        });
+                    } else {
+                        console.log("There was a problem with picture upload.");
+                    }
+                }
+            });
+        }
+    });
 });
 
 app.listen(3000, "localhost", function() {

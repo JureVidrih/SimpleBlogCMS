@@ -17,12 +17,18 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item <%=(origin == 'login') ? "active" : ""%>">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-      <li class="nav-item <%=(origin == 'newSignUp') ? "active" : ""%>">
-        <a class="nav-link" href="/signup/new">Sign up</a>
-      </li>
+      <% if(username) { %>
+        <li class="nav-item <%=(origin == 'login') ? "active" : ""%>">
+          <a class="nav-link" href="/logout"><span class="text-white">Logout </span>(<%=username%>)</a>
+        </li>
+      <% } else { %>
+        <li class="nav-item <%=(origin == 'login') ? "active" : ""%>">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        <li class="nav-item <%=(origin == 'register') ? "active" : ""%>">
+          <a class="nav-link" href="/users/new">Sign up</a>
+        </li>
+      <% } %>
     </ul>
   </div>
 </nav>
