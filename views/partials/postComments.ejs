@@ -1,6 +1,0 @@
-<h3 class="mb-3">Comments:</h3>
-<% post.comments.forEach(function(comment) { %>
-            <h5><img style="border-radius: 50%" class="mr-3" src="<%= comment.author.profilePicture %>" width="48" height="48"><%=comment.author.username%></h5>
-            <p><%=comment.content%></p>
-            <hr>
-<% }); %>

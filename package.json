@@ -1,11 +1,7 @@
 {
   "name": "simpleblogcms",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "0.1.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JureVidrih/SimpleBlogCMS.git"
@@ -18,28 +14,23 @@
   },
   "homepage": "https://github.com/JureVidrih/SimpleBlogCMS#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "ejs": "^2.5.8",
-    "express": "^4.16.3",
-    "express-formidable": "^1.0.0",
-    "express-router": "0.0.1",
-    "express-session": "^1.15.6",
-    "jquery": "^3.2.1",
-    "method-override": "^2.3.10",
-    "mongoose": "^5.0.15",
-    "multer": "^1.3.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.0"
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "2.1.5"
   },
-  "devDependencies": {
-    "browser-sync": "^2.21.0",
-    "gulp": "^3.9.1",
-    "gulp-postcss": "^7.0.0",
-    "gulp-watch": "^4.3.11",
-    "postcss-import": "^11.0.0",
-    "postcss-nested": "^3.0.0",
-    "postcss-simple-vars": "^4.1.0",
-    "postcss-vars": "^0.1.0"
-  }
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
