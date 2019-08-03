@@ -1,0 +1,20 @@
+.navLink {
+    margin: 0px 6px;
+    color: gray;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: lightgray;
+    text-decoration: none;
+}
+
+.navLinkActive {
+    color: white;
+    text-decoration: none;
+}
+
+.navLinkActive:hover {
+    color: white;
+    text-decoration: none;
+}
